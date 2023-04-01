@@ -35,6 +35,7 @@ type Options struct {
 	Separator         string
 	StrictGo          bool
 	DumpFunc          func(reflect.Value, io.Writer) bool
+	ShowRune          bool
 
 	// DisablePointerReplacement, if true, disables the replacing of pointer data with variable names
 	// when it's safe. This is useful for diffing two structures, where pointer variables would cause
@@ -366,8 +367,15 @@ func (s *dumpState) dumpVal(value reflect.Value) {
 	case reflect.Bool:
 		printBool(s.w, v.Bool())
 
-	case reflect.Int8, reflect.Int16, reflect.Int32, reflect.Int64, reflect.Int:
+	case reflect.Int8, reflect.Int16, reflect.Int64, reflect.Int:
 		printInt(s.w, v.Int(), 10)
+
+	case reflect.Int32:
+		if s.config.ShowRune {
+			s.write([]byte(strconv.QuoteRune(rune(v.Int()))))
+		} else {
+			printInt(s.w, v.Int(), 10)
+		}
 
 	case reflect.Uint8, reflect.Uint16, reflect.Uint32, reflect.Uint64, reflect.Uint:
 		printUint(s.w, v.Uint(), 10)

@@ -1,3 +1,9 @@
+This fork only adds an option called `ShowRune`, which would display int32 as a unicode character.
+
+Original readme starts below:
+
+---
+
 [![!Build Status](https://travis-ci.org/sanity-io/litter.svg?branch=master)](https://travis-ci.org/sanity-io/litter)
 
 # Litter
@@ -15,7 +21,7 @@ Litter is provided by
 
 ---
 
-Litter named for the fact that it outputs *literals*, which you *litter* your output with. As a side benefit, all Litter output is syntactically correct Go. You can use Litter to emit data during debug, and it's also really nice for "snapshot data" in unit tests, since it produces consistent, sorted output. Litter was inspired by [Spew](https://github.com/davecgh/go-spew), but focuses on terseness and readability.
+Litter named for the fact that it outputs _literals_, which you _litter_ your output with. As a side benefit, all Litter output is syntactically correct Go. You can use Litter to emit data during debug, and it's also really nice for "snapshot data" in unit tests, since it produces consistent, sorted output. Litter was inspired by [Spew](https://github.com/davecgh/go-spew), but focuses on terseness and readability.
 
 ### Basic example
 
@@ -161,7 +167,7 @@ litter.Config.DisablePointerReplacement = true
 
 Allows you to configure a local configuration of litter to allow for proper compartmentalization of state at the expense of some comfort:
 
-``` go
+```go
 	sq := litter.Options {
 		HidePrivateFields: true,
 		HomePackage: "thispack",
@@ -175,7 +181,7 @@ Allows you to configure a local configuration of litter to allow for proper comp
 
 Implement the interface Dumper on your types to take control of how your type is dumped.
 
-``` go
+```go
 type Dumper interface {
 	LitterDump(w io.Writer)
 }
@@ -187,7 +193,7 @@ where appropriate.
 
 A couple of examples from the test suite:
 
-``` go
+```go
 type CustomMultiLineDumper struct {}
 
 func (cmld *CustomMultiLineDumper) LitterDump(w io.Writer) {
@@ -199,4 +205,4 @@ type CustomSingleLineDumper int
 func (csld CustomSingleLineDumper) LitterDump(w io.Writer) {
 	w.Write([]byte("<custom>"))
 }
-````
+```
